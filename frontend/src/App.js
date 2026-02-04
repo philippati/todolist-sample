@@ -40,7 +40,7 @@ function App() {
       <input value={title} onChange={e => setTitle(e.target.value)} />
       <button onClick={addTask}>Add</button>
 
-      {tasks.map(task => (
+      {Array.isArray(tasks) && tasks.map(task => (
         <TaskItem key={task._id} task={task} onDelete={deleteTask} onUpdate={updateTask} />
       ))}
     </div>
