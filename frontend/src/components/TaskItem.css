@@ -1,0 +1,133 @@
+.task-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(44, 42, 38, 0.06);
+  border: 1px solid rgba(228, 221, 212, 0.8);
+  transition: box-shadow 0.2s, transform 0.15s;
+}
+
+.task-item:hover {
+  box-shadow: 0 4px 16px rgba(44, 42, 38, 0.08);
+}
+
+.task-item--completed .task-item__title,
+.task-item--completed .task-item__description {
+  text-decoration: line-through;
+  color: #9a948c;
+}
+
+.task-item__content {
+  flex: 1;
+  min-width: 0;
+}
+
+.task-item__title {
+  display: block;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #2c2a26;
+  word-break: break-word;
+}
+
+.task-item__description {
+  margin: 6px 0 0 0;
+  font-size: 0.875rem;
+  color: #6b6560;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+.task-item__edit {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+.task-item__edit .task-item__actions {
+  align-self: flex-end;
+}
+
+.task-item__input {
+  flex: 1;
+  padding: 10px 14px;
+  font-size: 0.9375rem;
+  border: 2px solid #e4ddd4;
+  border-radius: 8px;
+  background: #fff;
+  color: #2c2a26;
+}
+
+.task-item__input:focus {
+  outline: none;
+  border-color: #c17f59;
+}
+
+.task-item__input--description {
+  resize: vertical;
+  min-height: 64px;
+}
+
+.task-item__actions {
+  display: flex;
+  gap: 6px;
+}
+
+.task-item__btn {
+  padding: 8px 12px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 8px;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.task-item__btn:hover {
+  transform: scale(1.05);
+}
+
+.task-item__btn:active {
+  transform: scale(0.98);
+}
+
+.task-item__btn--edit {
+  background: #f5f2ee;
+  color: #6b6560;
+}
+
+.task-item__btn--edit:hover {
+  background: #ebe6e1;
+}
+
+.task-item__btn--delete {
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+.task-item__btn--delete:hover {
+  background: #fee2e2;
+}
+
+.task-item__btn--save {
+  background: linear-gradient(135deg, #c17f59 0%, #b56d47 100%);
+  color: #fff;
+}
+
+.task-item__btn--save:hover {
+  opacity: 0.95;
+}
+
+.task-item__btn--cancel {
+  background: #f5f2ee;
+  color: #6b6560;
+}
+
+.task-item__btn--cancel:hover {
+  background: #ebe6e1;
+}
