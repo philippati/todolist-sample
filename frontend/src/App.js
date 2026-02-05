@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import TaskItem from "./components/TaskItem";
+import "./App.css";
 
 const API_URL = process.env.REACT_APP_API_URL;
-
-console.log("API URL:", process.env.REACT_APP_API_URL);
 
 function App() {
   const [tasks, setTasks] = useState([]);
   const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
 
   useEffect(() => { fetchTasks(); }, []);
 
@@ -18,10 +18,14 @@ function App() {
   };
 
   const addTask = async () => {
-    if (!title) return;
-    const res = await axios.post(API_URL, { title });
+    if (!title.trim()) return;
+    const res = await axios.post(API_URL, {
+      title: title.trim(),
+      description: description.trim(),
+    });
     setTasks([...tasks, res.data]);
     setTitle("");
+    setDescription("");
   };
 
   const deleteTask = async (id) => {
@@ -34,18 +38,61 @@ function App() {
     setTasks(tasks.map(task => task._id === id ? res.data : task));
   };
 
-  return (
-    <div style={{ maxWidth: 500, margin: "40px auto" }}>
-      <h1>To-Do List</h1>
-      <input value={title} onChange={e => setTitle(e.target.value)} />
-      <button onClick={addTask}>Add</button>
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      addTask();
+    }
+  };
 
-      {Array.isArray(tasks) && tasks.map(task => (
-        <TaskItem key={task._id} task={task} onDelete={deleteTask} onUpdate={updateTask} />
-      ))}
+  return (
+    <div className="app">
+      <header className="header">
+        <h1 className="title">To-Do List</h1>
+        <p className="subtitle">Stay organized, one task at a time</p>
+      </header>
+
+      <div className="add-form">
+        <div className="add-form__fields">
+          <input
+            className="add-input add-input--title"
+            type="text"
+            value={title}
+            onChange={e => setTitle(e.target.value)}
+            onKeyDown={handleKeyDown}
+            placeholder="Title"
+          />
+          <textarea
+            className="add-input add-input--description"
+            value={description}
+            onChange={e => setDescription(e.target.value)}
+            onKeyDown={handleKeyDown}
+            placeholder="Description (optional)"
+            rows={2}
+          />
+        </div>
+        <button className="add-btn" onClick={addTask}>Add</button>
+      </div>
+
+      <div className="task-list">
+        {Array.isArray(tasks) && tasks.length > 0 ? (
+          tasks.map(task => (
+            <TaskItem
+              key={task._id}
+              task={task}
+              onDelete={deleteTask}
+              onUpdate={updateTask}
+            />
+          ))
+        ) : (
+          <div className="empty-state">
+            <div className="empty-state-icon">📝</div>
+            <p>No tasks yet. Add one above to get started!</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
 
 export default App;
-
